@@ -2,7 +2,12 @@ import { getDetailBook } from "@/app/lib/microcms/client";
 import Image from "next/image";
 import React from "react";
 
-const DetailBook = async ({ params }: { params: { id: string } }) => {
+
+type PageProps = {
+    params: { id: string };
+};
+
+const DetailBook = async ({ params }: PageProps) => {
     
     const book = await getDetailBook(params.id);
     return (
