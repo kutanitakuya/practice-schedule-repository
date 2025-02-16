@@ -5,6 +5,7 @@ import { BookType } from "../types/types";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { Session } from "next-auth";
 
 type BookProps = {
     book: BookType;
@@ -14,7 +15,7 @@ type BookProps = {
 const Book = ({ book, isPurchased }: BookProps) => {
     const [showModal, setShowModal] = useState(false);
     const {data: session} = useSession();
-    const user: any = session?.user;
+    const user: Session["user"] | null = session?.user || null;
     const router = useRouter();
 
     const startCheckout = async () => {

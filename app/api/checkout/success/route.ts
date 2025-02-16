@@ -31,7 +31,11 @@ export async function POST(request: Request) {
             return NextResponse.json({message: "すでに購入済みです。"});
         }
 
-    } catch (err: any) { 
-        return NextResponse.json(err.message)
+    } catch (err: unknown) { 
+        if (err instanceof Error) {
+            return NextResponse.json({ message: err.message });
+        } else {
+            return NextResponse.json({ message: "An unknown error occurred" });
+        }
     }
 }
