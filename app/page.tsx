@@ -4,12 +4,8 @@ import { getServerSession } from "next-auth";
 import Book from "./components/Book";
 import { getAllBooks } from "./lib/microcms/client";
 import { BookType, Purchase, User } from "./types/types";
-import next from "next";
 import nextAuthOptions from "./lib/next-auth/options";
 
-
-
-// eslint-disable-next-line @next/next/no-async-client-component
 export default async function Home() {
 
   const { contents } = await getAllBooks();

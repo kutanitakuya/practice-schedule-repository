@@ -2,11 +2,9 @@ import type { Metadata } from "next";
 import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import Header from "./components/Header";
-import { SessionProvider } from "next-auth/react";
 import { NextAuthProvider } from "./lib/next-auth/provider";
 import { Suspense } from "react";
 import Loading from "./loading";
-SessionProvider
 
 const notoSansJP = Noto_Sans_JP({
   subsets: ["latin"], weight: ["400"],

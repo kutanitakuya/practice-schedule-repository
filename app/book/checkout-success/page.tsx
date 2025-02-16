@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { CgAttachment } from "react-icons/cg";
 
 const PurchaseSuccess = () => {
     const [bookUrl, setBookUrl] = useState(null);

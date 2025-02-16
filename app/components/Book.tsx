@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { BookType } from "../types/types";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
@@ -12,7 +11,6 @@ type BookProps = {
     isPurchased: boolean
 };
 
-// eslint-disable-next-line react/display-name
 const Book = ({ book, isPurchased }: BookProps) => {
     const [showModal, setShowModal] = useState(false);
     const {data: session} = useSession();
