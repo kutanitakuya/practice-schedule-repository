@@ -3,20 +3,19 @@ import { NextResponse } from "next/server";
 
 // 購入履歴検索API
 export async function GET(
-    request: Request, 
-    {params}: {params: {userId: string}}
+    request: Request,
+    context: { params: { userId: string } }
 ) {
-    const userId = await params.userId;
+    const { userId } = context.params; // ← `await` は不要
 
     try {
         const purchases = await prisma.purchase.findMany({
-            where: {
-                userId: userId
-            },
+            where: { userId },
         });
 
-        return NextResponse.json({purchases});
+        return NextResponse.json({ purchases }, { status: 200 }); 
     } catch (err) {
-        return NextResponse.json(err);
+        console.error("Error fetching purchases:", err);
+        return NextResponse.json({ error: "Failed to fetch purchases" }, { status: 500 });
     }
 };
