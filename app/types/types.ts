@@ -9,7 +9,7 @@ type BookType = {
 };
 
 type User = {
-    id: string;
+    id?: string | null;
     name?: string | null;
     email?: string | null;
     image?: string | null;

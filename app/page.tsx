@@ -38,6 +38,7 @@ export default async function Home() {
           <Book
             key={book.id}
             book={book}
+            user={user}
             isPurchased={purchaseBookIds.includes(book.id)}
           />
         ))}
