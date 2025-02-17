@@ -9,13 +9,14 @@ import { Session } from "next-auth";
 
 type BookProps = {
     book: BookType;
+    user: any;
     isPurchased: boolean
 };
 
-const Book = ({ book, isPurchased }: BookProps) => {
+const Book = ({ book, user, isPurchased }: BookProps) => {
     const [showModal, setShowModal] = useState(false);
     const {data: session} = useSession();
-    const user: Session["user"] | null = session?.user || null;
+    // const user: Session["user"] | null = session?.user || null;
     const router = useRouter();
 
     const startCheckout = async () => {
