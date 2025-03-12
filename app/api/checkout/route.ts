@@ -26,6 +26,13 @@ export async function POST(request: Request) {
                 },
             ],
             mode: "payment",
+            custom_fields: [
+                {
+                  key: 'full_name',
+                  label: { type: 'custom', custom: '氏名' },
+                  type: 'text',
+                },
+              ],
             success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/book/checkout-success?session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}`,
         });

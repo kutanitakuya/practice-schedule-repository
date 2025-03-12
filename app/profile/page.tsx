@@ -5,6 +5,7 @@ import { BookType, Purchase, User } from "../types/types";
 import { getDetailBook } from "../lib/microcms/client";
 import PurchaseDetailBook from "../components/PurchaseDetailBook";
 
+
 export default async function ProfilePage() {
     const session = await getServerSession(nextAuthOptions);
     const user = session?.user as User;
@@ -13,16 +14,31 @@ export default async function ProfilePage() {
 
     // ユーザが存在する場合、購入履歴を取得
     if (user) {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/purchases/${user.id}`
-      );
-    
-      const purchasesData = (await response.json()).purchases;
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/purchases/${user.id}`
+        );
 
-      purchasesDetailBooks = await Promise.all(
-        purchasesData.map(async(purchase: Purchase) => {
-            return await getDetailBook(purchase.bookId);
-      }));
+        // HTTPレスポンスステータスをチェック
+        if (!response.ok) {
+          throw new Error(`サーバーからの応答が異常です: ${response.status}`);
+        }
+      
+        const purchasesData = (await response.json()).purchases;
+
+        purchasesDetailBooks = await Promise.all(
+          purchasesData.map(async(purchase: Purchase) => {
+              return await getDetailBook(purchase.bookId);
+        }));
+
+
+      } catch (error) {
+        // ネットワークエラーまたはデータ処理エラーの捕捉
+        console.error('エラーが発生しました:', error);
+        console.log(`${process.env.NEXT_PUBLIC_API_URL}/purchases/${user.id}`);
+      }
+
+      
     }
   
 
