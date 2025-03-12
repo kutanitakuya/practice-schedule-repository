@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
@@ -13,14 +13,16 @@ interface Error {
   passwordConfirm: [];
 }
 
+
+
 const Page = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const [resError, setResError] = useState<Error>();
 
   const {
     register,
     handleSubmit,
-    getValues,
+    // getValues,
     formState: { errors },
   } = useForm({
     mode: "onChange",

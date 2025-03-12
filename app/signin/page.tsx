@@ -1,22 +1,26 @@
 "use client";
 import React from "react";
 import { useState } from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { validationLoginSchema } from "@/app/src/validationSchema";
 
+// validationLoginSchema に基づいて型を生成
+type LoginFormData = z.infer<typeof validationLoginSchema>;
+
 const Page = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const [resError, setResError] = useState<Error>();
   const {
     register,
     handleSubmit,
-    getValues,
+    // getValues,
     formState: { errors },
-  } = useForm({
+  } = useForm<LoginFormData>({
     mode: "onChange",
     resolver: zodResolver(validationLoginSchema),
   });
@@ -24,7 +28,7 @@ const Page = () => {
   //セッション判定
   if (session) redirect("/");
 
-  const handleLogin = async (data: any) => {
+  const handleLogin = async (data: LoginFormData) => {
     const email = data.email;
     const password = data.password;
     const res = await fetch("/api/signIn", {
