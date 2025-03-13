@@ -13,6 +13,10 @@ interface Error {
   passwordConfirm: [];
 }
 
+interface FormData {
+  email: string;
+  password: string;
+}
 
 
 const Page = () => {
@@ -33,7 +37,7 @@ const Page = () => {
   if (session) redirect("/");
 
   //登録処理
-  const handleRegist = async (data: any) => {
+  const handleRegist = async (data: FormData) => {
     //フォーム取得
     const email = data.email;
     const password = data.password;

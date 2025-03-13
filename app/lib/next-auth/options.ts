@@ -24,6 +24,7 @@ export const nextAuthOptions:NextAuthOptions = {
                   where: { email: credentials?.email },
                 });
               } catch (error) {
+                console.error(error);
                 return null; // エラーが発生した場合はnullを返す
               }
               return user;

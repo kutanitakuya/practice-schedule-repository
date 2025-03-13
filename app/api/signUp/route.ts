@@ -10,13 +10,18 @@ export async function POST(req: NextRequest) {
   // メールアドレス重複確認とバリデーションを同時に行う
   const [user, validationResult] = await Promise.all([
     prisma.user.findFirst({ where: { email } }),
-    validationRegistSchema.safeParseAsync(data)
+    validationRegistSchema.safeParseAsync(data),
   ]);
 
-  let errors = validationResult.success ? {} : validationResult.error.flatten().fieldErrors;
+  const errors = validationResult.success
+    ? {}
+    : validationResult.error.flatten().fieldErrors;
   //スプレッド構文で広げてから代入
   if (user) {
-    errors.email = [...(errors.email || []), "このメールアドレスは既に使用されています"];
+    errors.email = [
+      ...(errors.email || []),
+      "このメールアドレスは既に使用されています",
+    ];
   }
 
   if (Object.keys(errors).length > 0) {
@@ -32,5 +37,7 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  return new NextResponse(JSON.stringify({ message: "Success" }), { status: 201 });
+  return new NextResponse(JSON.stringify({ message: "Success" }), {
+    status: 201,
+  });
 }
